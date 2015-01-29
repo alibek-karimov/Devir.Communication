@@ -14,7 +14,6 @@ app.use(function(req, res, next) {
 var server = http.createServer(app).listen(6888);
 var io = socketio.listen(server, {log:false, origins:'*:*'});
 console.log('socket ready');
-var subsribers = [];
 
 
 io.sockets.on("connection", function(socket) {
