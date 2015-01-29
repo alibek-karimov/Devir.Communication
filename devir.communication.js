@@ -3,7 +3,6 @@ var socketio = require('socket.io');
 var express = require('express');
 var app = express();
 
-
 app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -22,20 +21,19 @@ io.sockets.on("connection", function(socket) {
 	console.log('connected');
 
 	socket.on('message', function(data) {
-		var jsonData = JSON.parse(data);
-		console.log("message: " + jsonData.EventName);
+		if (typeof data != "object")
+			data = JSON.parse(data);
+		console.log("message: " + data.EventName);
 		
-		socket.broadcast.to(jsonData.EventName).emit(jsonData.EventName , jsonData.EventData);
+		socket.broadcast.to(data.EventName).emit(data.EventName , data.EventData);
 	});
 
 	socket.on('subscribe', function(data) {
+		
+		if (typeof data != "object")
+			data = JSON.parse(data);
+		console.log('subscribe' + data.EventName);
 		socket.join(data.EventName);
 	});
 
-
 });
-
-
-
-
-
