@@ -38,7 +38,7 @@ io.sockets.on('connection', function (socket) {
         socket.join(data.EventName);
     });
 
-    socket.on('[' + new Date() + ']' + 'unsubscribe', function (data) {
+    socket.on('unsubscribe', function (data) {
         if (typeof data != 'object')
             data = JSON.parse(data);
         console.log(Now() + 'unsubscribe: ' + data.EventName)
